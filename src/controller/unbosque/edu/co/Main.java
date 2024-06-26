@@ -5,7 +5,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		 StringBuilder string = new StringBuilder("adhk135@%()QPWO");
+		 StringBuilder string = new StringBuilder("Crlos85]...qw gD");
 		
 		 Password password = new Password();
 		 password.contraseña(string);
