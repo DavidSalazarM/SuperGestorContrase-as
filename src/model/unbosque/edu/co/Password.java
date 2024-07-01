@@ -1,9 +1,10 @@
 package model.unbosque.edu.co;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Password {
-	private StringBuilder cadena = new StringBuilder(" ");
 	private StringBuilder SERIE_NUMERICA = new StringBuilder("0123456789");
 	private StringBuilder SERIE_LETRAS_TECLADO = new StringBuilder("qwertyuiopasdfghjklzxcvbnm");
 	private StringBuilder SERIE_LETRAS_TECLADO_MAYUSCULAS = new StringBuilder("QWERTYUIOPASDFGHJKLZXCVBNM");
@@ -21,7 +22,7 @@ public class Password {
 	private byte minNumeroCaracteres=8;
 	
 	public void contraseña(StringBuilder password){
-		if (procesarPasswordCaracteres(password)){
+		if (caracteresMinimos(password)){
 			System.out.println("su contraseña es valida :)");
 		}else {System.out.println("no es tu culpa pero fallaste en algo :'c");}
 	}
@@ -57,54 +58,68 @@ public class Password {
 		this.numeros.clear();
 		this.caracteresContadosTotales=0;
 	}
-	
+
 	public boolean procesarPasswordCaracteres(StringBuilder password){
-	    if (password.isEmpty()) {
-	    	guradarString(cadena);
-	    	caracteresEspeciales.remove(0);
-	        return PasswordValido();
-	    }
-	    char caracter = password.charAt(0);  
-	    char ultimoCaracterGuardado = cadena.charAt(cadena.length()-1); 
-		if (Character.isLowerCase(caracter)){
-			if(!Character.isLowerCase(ultimoCaracterGuardado)){
-				guradarString(cadena);
-				cadena.setLength(0);
-			}
-			cadena.append(caracter);
-		}else if (Character.isUpperCase(caracter)){
-			if(!Character.isUpperCase(ultimoCaracterGuardado)){
-				guradarString(cadena);
-				cadena.setLength(0);
-			}
-			cadena.append(caracter);
-		}else if(Character.isDigit(caracter)){
-			if(!Character.isDigit(ultimoCaracterGuardado)){
-				guradarString(cadena);
-				cadena.setLength(0);
-			}
-			cadena.append(caracter);
-		}else if (!Character.isLetterOrDigit(caracter)){
-			if(Character.isLetterOrDigit(ultimoCaracterGuardado)){
-				guradarString(cadena);
-				cadena.setLength(0);
-			}
-			cadena.append(caracter);
-		}
-		return procesarPasswordCaracteres(new StringBuilder(password.substring(1)));
+		 var passwordStr = password.toString();
+		 
+		 guardarMinusculas(passwordStr);
+		 guardarMayusculas(passwordStr);
+		 guardarNumeros(passwordStr);
+		 guardarEspeciales(passwordStr);
+		return PasswordValido();
+	}
+	
+	private void guardarEspeciales(String passwordStr) {
+		 Pattern patterEspeciales = Pattern.compile("[^\\d|\\p{Lower}|\\p{Upper}]+");
+		 Matcher matcherEspeciales = patterEspeciales.matcher(passwordStr);
+		 while (matcherEspeciales.find()) {
+			 var group = matcherEspeciales.group();
+			 caracteresEspeciales.add(group);
+		 }
+		
 	}
 
-	private void guradarString(StringBuilder cadena) {
-		char caracter = cadena.charAt(0); 
-		if (Character.isLowerCase(caracter)){
-			this.letrasMinusculas.add(cadena.toString());
-		}else if (Character.isUpperCase(caracter)){
-			letrasMayusculas.add(cadena.toString());
-		}else if(Character.isDigit(caracter)){
-			numeros.add(cadena.toString());
-		}else{caracteresEspeciales.add(cadena.toString());}
+	private void guardarNumeros(String passwordStr) {
+		 Pattern patterNumeros = Pattern.compile("\\d+");
+		 Matcher matcherNumeros = patterNumeros.matcher(passwordStr);
+		 while (matcherNumeros.find()) {
+			 var group = matcherNumeros.group();
+			 numeros.add(group);
+		
+		 }
+		
+	}
+
+	
+	public boolean caracteresMinimos(StringBuilder password){
+		Pattern compiledPattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).*$");
+        Matcher matcher = compiledPattern.matcher(password.toString());
+        if( matcher.matches()){
+        	return procesarPasswordCaracteres(password);
+        }else{return false;}
 	}
 	
+	private void guardarMayusculas(String passwordStr) {
+		 Pattern patterMayusculas = Pattern.compile("\\p{Upper}+");
+		 Matcher matcherMayusculas = patterMayusculas.matcher(passwordStr);
+		 while (matcherMayusculas.find()) {
+			 var group = matcherMayusculas.group();
+			 letrasMayusculas.add(group);
+	
+		 }
+		 
+		
+	}
+
+	private void guardarMinusculas(String passwordStr) {
+		 Pattern patterMinusculas= Pattern.compile("\\p{Lower}+");
+		 Matcher matcherMinusculas = patterMinusculas.matcher(passwordStr);
+		 while (matcherMinusculas.find()) {
+			 var group = matcherMinusculas.group();
+			 letrasMinusculas.add(group);
+		 }
+	}
+
 	public boolean validarPasswordSeries(ArrayList<String> cadena, ArrayList<String> resultadosConocidosNumeros, StringBuilder tipoCaracter) {
 		if (cadena.isEmpty()) {
 	        return true;
