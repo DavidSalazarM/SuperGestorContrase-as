@@ -12,36 +12,54 @@ public class CheckPassword extends JPanel {
 
     public CheckPassword(final JFrame frame) {
         frame.getContentPane().removeAll();
-        frame.repaint();
+        //frame.repaint();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1500, 700);
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(null); // Usar layout nulo para control absoluto
         frame.setResizable(false);
 
+        // Header Panel
         JPanel headerPanel = new JPanel();
+        headerPanel.setBounds(0, 0, frame.getWidth(), 100); // Establecer posición y tamaño
         headerPanel.setBackground(Color.decode("#FF4F63"));
-        headerPanel.setPreferredSize(new Dimension(frame.getWidth(), 100));
-        headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        headerPanel.setLayout(null); // Usar layout nulo para control absoluto
 
+        // Logo Icon
         ImageIcon originalIcon = new ImageIcon("logo.png");
         Image originalImage = originalIcon.getImage();
         Image resizedImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
         JLabel logoLabel = new JLabel(resizedIcon);
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logoLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        logoLabel.setBounds(540, 25, 50, 50); // Posición y tamaño del icono
 
         // Título
         JLabel titleLabel = new JLabel("Revisar Contraseña");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setBounds(620, 30, 300, 40); // Posición y tamaño del título
 
-        headerPanel.add(Box.createVerticalStrut(100));
+        // Botón Help
+        JButton helpButton = new JButton("Help");
+        helpButton.setBounds(1380, 54, 100, 40); // Posición y tamaño del botón
+        helpButton.setBackground(Color.decode("#FF4F63"));
+        helpButton.setForeground(Color.WHITE);
+        helpButton.setFocusPainted(false);
+        helpButton.setFont(new Font("Arial", Font.BOLD, 20));
+        helpButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                AboutManual.showHelpOptions(frame);
+            }
+        });
+
         headerPanel.add(logoLabel);
-        headerPanel.add(Box.createVerticalStrut(10));
         headerPanel.add(titleLabel);
-        headerPanel.add(Box.createVerticalStrut(20));
+        headerPanel.add(helpButton);
+        frame.add(headerPanel);
+
+        // Table Panel
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBounds(0, 99, 1485, 500); // Posición y tamaño del panel de la tabla
+        tablePanel.setBackground(Color.WHITE);
 
         String[] columnNames = {"Sitios", "Usuarios", "Contraseña", "Acciones"};
         Object[][] data = {
@@ -73,9 +91,12 @@ public class CheckPassword extends JPanel {
         table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), frame)); // Pasar frame
 
         JScrollPane scrollPane = new JScrollPane(table);
-        table.setFillsViewportHeight(true);
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+        frame.add(tablePanel);
 
+        // Botón Regresar
         JButton backButton = new JButton("Regresar");
+        backButton.setBounds(500, 600, 500, 50); // Posición y tamaño del botón Regresar
         backButton.setBackground(Color.decode("#FF4F63"));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
@@ -87,34 +108,9 @@ public class CheckPassword extends JPanel {
             }
         });
 
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.add(scrollPane, BorderLayout.CENTER);
-        centerPanel.add(backButton, BorderLayout.SOUTH);
-
-        frame.add(headerPanel, BorderLayout.NORTH);
-        frame.add(centerPanel, BorderLayout.CENTER);
-
-        // Add Help button
-        addHelpButton(frame);
+        frame.add(backButton);
 
         frame.setVisible(true);
-    }
-
-    private void addHelpButton(JFrame frame) {
-    	JButton helpButton = new JButton("Help");
-    	helpButton.setBackground(Color.decode("#FF4F63"));
-    	helpButton.setForeground(Color.WHITE);
-    	helpButton.setFocusPainted(false);
-    	helpButton.setFont(new Font("Arial", Font.BOLD, 20));
-    	helpButton.addActionListener(new ActionListener() {
-    	    public void actionPerformed(ActionEvent e) {
-    	        AboutManual.showHelpOptions(frame);
-    	    }
-    	});
-
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottomPanel.add(helpButton);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
     }
 }
 
@@ -152,20 +148,7 @@ class ButtonEditor extends DefaultCellEditor {
             // Abrir la ventana UpdatePassword
             new UpdatePassword(frame); // Pasar el JFrame al constructor de UpdatePassword
         });
-        
-        JButton helpButton = new JButton("Help");
-        helpButton.setBackground(Color.decode("#FF4F63"));
-        helpButton.setForeground(Color.WHITE);
-        helpButton.setFocusPainted(false);
-        helpButton.setFont(new Font("Arial", Font.BOLD, 20));
-        helpButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                AboutManual.showHelpOptions(frame);
-            }
-        });
     }
-    
-    
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {

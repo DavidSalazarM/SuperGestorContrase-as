@@ -1,7 +1,9 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class AboutManual {
 
@@ -22,8 +24,8 @@ public class AboutManual {
                 JOptionPane.showMessageDialog(frame, "Super Password Max Plus Turbo (v.3.2.3)", "About", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 1:
-                // Implementar la lógica para abrir el manual PDF (ejemplo simulado)
-                String pathToManual = "manual.pdf"; // Ruta al manual PDF
+                // Implementar la lógica para abrir el manual PDF
+                String pathToManual = "C:\\Users\\Manuel\\Desktop\\SuperGestorContrase-as-master\\Manual de Usuario.pdf";
                 openPDFManual(pathToManual);
                 break;
             default:
@@ -31,9 +33,20 @@ public class AboutManual {
         }
     }
 
-    // Método para abrir el manual PDF (ejemplo simulado)
+    // Método para abrir el manual PDF
     private static void openPDFManual(String filePath) {
-        // Aquí se debería implementar la lógica para abrir el PDF
-        JOptionPane.showMessageDialog(null, "Abriendo el manual...", "Manual", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                JOptionPane.showMessageDialog(null, "El archivo no existe: " + filePath, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Desktop.getDesktop().open(file);
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 }
