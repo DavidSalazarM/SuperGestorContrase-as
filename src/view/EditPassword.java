@@ -48,7 +48,7 @@ public class EditPassword extends JPanel {
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         frame.setResizable(false);
 
-        // Panel for the header
+        // Panel del encabezado
         JPanel headerPanel = new JPanel(null); // Layout nulo para posicionar manualmente
         headerPanel.setBackground(Color.decode("#FF4F63"));
         headerPanel.setPreferredSize(new Dimension(frame.getWidth(), 100));
@@ -56,7 +56,7 @@ public class EditPassword extends JPanel {
         // Logo
         ImageIcon originalIcon = new ImageIcon("logo.png");
         Image originalImage = originalIcon.getImage();
-        // Resize the image
+        // Redimensionar la imagen
         Image resizedImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
         JLabel logoLabel = new JLabel(resizedIcon);
@@ -93,7 +93,7 @@ public class EditPassword extends JPanel {
         leftPanel.setBounds(450, 200, 350, 300);
         leftPanel.setBackground(Color.WHITE);
 
-     // Etiqueta SITIO
+        // Etiqueta SITIO
         JLabel lblSitio = new JLabel("SITIO");
         lblSitio.setBounds(0, 0, 80, 25);
         lblSitio.setForeground(Color.decode("#808080"));
@@ -182,10 +182,10 @@ public class EditPassword extends JPanel {
         caracterEspecialCheckbox = new JRadioButton("Carácter especial");
         caracterEspecialCheckbox.setBackground(Color.WHITE); // Establecer fondo blanco
 
-        letrasMayusculasCheckbox = new JRadioButton("Minúscula");
+        letrasMayusculasCheckbox = new JRadioButton("Mayúscula");
         letrasMayusculasCheckbox.setBackground(Color.WHITE);
 
-        letrasMinusculasCheckbox = new JRadioButton("Mayúscula");
+        letrasMinusculasCheckbox = new JRadioButton("Minúscula");
         letrasMinusculasCheckbox.setBackground(Color.WHITE);
 
         caracterNumericoCheckbox = new JRadioButton("Carácter numérico");
@@ -286,5 +286,57 @@ public class EditPassword extends JPanel {
         frame.getContentPane().setBackground(Color.WHITE);
 
         frame.setVisible(true);
+    }
+
+    public JTextField getSitioField() {
+        return sitioField;
+    }
+
+    public JTextField getUsuarioField() {
+        return usuarioField;
+    }
+
+    public JPasswordField getContraseñaField() {
+        return contraseñaField;
+    }
+
+    public JRadioButton getCaracterEspecialCheckbox() {
+        return caracterEspecialCheckbox;
+    }
+
+    public JRadioButton getLetrasMayusculasCheckbox() {
+        return letrasMayusculasCheckbox;
+    }
+
+    public JRadioButton getLetrasMinusculasCheckbox() {
+        return letrasMinusculasCheckbox;
+    }
+
+    public JRadioButton getCaracterNumericoCheckbox() {
+        return caracterNumericoCheckbox;
+    }
+
+    public JComboBox<Integer> getLongitudComboBox() {
+        return longitudComboBox;
+    }
+
+    public JButton getGuardarButton() {
+        return guardarButton;
+    }
+
+    public JButton getSugerenciaButton() {
+        return sugerenciaButton;
+    }
+
+    public JButton getRegresarButton() {
+        return regresarButton;
+    }
+
+    public JToggleButton getVerContraseñaButton() {
+        return verContraseñaButton;
+    }
+
+    public JFrame getFrame() {
+        return this.frame;
     }
 }

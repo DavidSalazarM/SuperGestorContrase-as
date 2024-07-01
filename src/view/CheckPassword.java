@@ -159,7 +159,8 @@ class ButtonEditor extends DefaultCellEditor {
             .findAny()
             .orElse(null);
             
-            new EditPassword(frame,controller ,entry); // Pasar el JFrame al constructor de UpdatePassword
+            EditPassword editPasswordScreem = new EditPassword(frame,controller ,entry); // Pasar el JFrame al constructor de UpdatePassword
+            controller.configureEditPasswordListeners(editPasswordScreem);
         });
     }
 

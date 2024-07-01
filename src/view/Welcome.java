@@ -84,6 +84,8 @@ public class Welcome extends JPanel {
         newPasswordButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new EditPassword(frame, controller, null);
+                EditPassword editPasswordScreem = new EditPassword(frame, controller, null);
+                controller.configureEditPasswordListeners(editPasswordScreem);
             }
         });
 
