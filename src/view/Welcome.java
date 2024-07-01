@@ -20,11 +20,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.Controller;
+
 
 public class Welcome extends JPanel {
     private static final long serialVersionUID = 1L;
+    private Controller controller;
 
-    public Welcome(final JFrame frame) {
+    public Welcome(final JFrame frame, Controller controller) {
+    	this.controller = controller;
         frame.getContentPane().removeAll();
         frame.repaint();
         // Frame
@@ -77,7 +81,7 @@ public class Welcome extends JPanel {
         newPasswordButton.setFont(new Font("Arial", Font.BOLD, 20));
         newPasswordButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
-                new EditPassword(frame); 
+                new EditPassword(frame, controller, null); 
             } 
         }); 
 
@@ -88,7 +92,7 @@ public class Welcome extends JPanel {
         reviewPasswordsButton.setFont(new Font("Arial", Font.BOLD, 20));
         reviewPasswordsButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
-                new CheckPassword(frame); 
+                new CheckPassword(frame, controller); 
             } 
         }); 
 
@@ -102,7 +106,7 @@ public class Welcome extends JPanel {
                 JOptionPane.showMessageDialog(frame, "Hasta pronto :)");
                 frame.getContentPane().removeAll();
                 frame.repaint();
-                new Login(frame);
+                new Login(frame, controller);
             } 
         }); 
 

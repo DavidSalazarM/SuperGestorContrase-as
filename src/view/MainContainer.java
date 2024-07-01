@@ -1,18 +1,13 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import controller.Controller;
 
 public class MainContainer extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 
-	public MainContainer() {
-		new Welcome(this);
+	public MainContainer(Controller controller) {
+		new Welcome(this, controller);
 	}
-
 }

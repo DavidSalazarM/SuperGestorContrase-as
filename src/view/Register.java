@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+
+import controller.Controller;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +17,12 @@ public class Register extends JPanel {
     private JTextField nombreField;
     private JTextField usuarioField;
     private JPasswordField contraseñaField;
+    private Controller controller;
 
-    public Register(JFrame frame) {
+
+    public Register(JFrame frame, Controller controller) {
         this.frame = frame;
+        this.controller = controller;
         initialize();
     }
 
@@ -103,7 +109,7 @@ public class Register extends JPanel {
                 contraseñaField.setText("");
 
                 // Volver a la ventana de inicio de sesión
-                new Login(frame);
+                new Login(frame, controller);
             }
         });
 
@@ -117,7 +123,7 @@ public class Register extends JPanel {
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Volver a la ventana de inicio de sesión al cancelar
-                new Login(frame);
+                new Login(frame, controller);
             }
         });
 
@@ -132,10 +138,5 @@ public class Register extends JPanel {
             JOptionPane.showMessageDialog(frame, "Error al guardar el registro", "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        Register registerWindow = new Register(frame);
     }
 }

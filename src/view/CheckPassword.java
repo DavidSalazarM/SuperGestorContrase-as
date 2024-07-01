@@ -3,14 +3,20 @@ package view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import controller.Controller;
+import model.PasswordEntry;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CheckPassword extends JPanel {
     private static final long serialVersionUID = 1L;
-
-    public CheckPassword(final JFrame frame) {
+    private Controller controller;
+    
+    public CheckPassword(final JFrame frame, Controller controller) {
+    	this.controller = controller;
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,12 +50,14 @@ public class CheckPassword extends JPanel {
         headerPanel.add(Box.createVerticalStrut(20));
 
         String[] columnNames = {"Sitios", "Usuarios", "Contraseña", "Acciones"};
-        Object[][] data = {
-                {"https://www.google.com", "chopenawer@gmail.com", "M0RZaT_nbdsHGS", "Actualizar"},
-                {"https://www.Anschluss.com", "Kurt_Meyer01", "K@1s3r_1938", "Actualizar"},
-                {"https://blog.hubspot.com", "FakeName", "22xx/M@gyver/xx44", "Actualizar"},
-                {"https://www.youtube.com", "Daxos@hotmail.com", "28527500-M0l0t0x$", "Actualizar "}
-        };
+
+        Object[][] data = new Object[controller.getPasswordEntries().size()][4];
+        for(int i = 0; i < controller.getPasswordEntries().size(); i++) {
+        	data[i][0] = controller.getPasswordEntries().get(i).getSite();
+        	data[i][1] = controller.getPasswordEntries().get(i).getUsername();
+        	data[i][2] = controller.getPasswordEntries().get(i).getPassword();
+        	data[i][3] = "Actualizar";
+        }
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model) {
@@ -70,7 +78,7 @@ public class CheckPassword extends JPanel {
         table.setSelectionForeground(Color.WHITE);
 
         table.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-        table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), frame)); // Pasar frame
+        table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), frame, controller)); // Pasar frame
 
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
@@ -83,7 +91,7 @@ public class CheckPassword extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Welcome(frame);
+                new Welcome(frame, controller);
             }
         });
 
@@ -138,8 +146,9 @@ class ButtonEditor extends DefaultCellEditor {
     protected JButton button;
     private String label;
     private boolean isPushed;
+    private String site;
 
-    public ButtonEditor(JCheckBox checkBox, JFrame frame) {
+    public ButtonEditor(JCheckBox checkBox, JFrame frame, Controller controller) {
         super(checkBox);
         button = new JButton("Actualizar");
         button.setOpaque(true);
@@ -150,7 +159,11 @@ class ButtonEditor extends DefaultCellEditor {
         button.addActionListener(e -> {
             fireEditingStopped();
             // Abrir la ventana UpdatePassword
-            new UpdatePassword(frame); // Pasar el JFrame al constructor de UpdatePassword
+            PasswordEntry entry = controller.getPasswordEntries().stream().filter(passwordEntry -> site.equals(passwordEntry.getSite()))
+            .findAny()
+            .orElse(null);
+            
+            new EditPassword(frame,controller ,entry); // Pasar el JFrame al constructor de UpdatePassword
         });
         
         JButton helpButton = new JButton("Help");
@@ -169,6 +182,9 @@ class ButtonEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    	// System.out.println(table.getValueAt(row, column));
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        site = (String) model.getValueAt(row, 1);
         label = (value == null) ? "Actualizar" : value.toString();
         button.setText(label);
         isPushed = true;

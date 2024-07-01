@@ -1,9 +1,15 @@
 package view;
 
 import javax.swing.*;
+
+import controller.Controller;
+import model.PasswordEntry;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.UUID;
 
 public class EditPassword extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -21,9 +27,14 @@ public class EditPassword extends JPanel {
     private JButton sugerenciaButton;
     private JButton regresarButton;
     private JToggleButton verContraseñaButton;
+    private Controller controller;
+    private PasswordEntry currentEntry; 
 
-    public EditPassword(JFrame frame) {
+
+    public EditPassword(JFrame frame, Controller controller, PasswordEntry passwordEntry) {
         this.frame = frame;
+    	currentEntry = passwordEntry;    	
+        this.controller = controller;
         initialize();
     }
 
@@ -64,6 +75,9 @@ public class EditPassword extends JPanel {
         sitioField.setForeground(Color.decode("#4D4C4C"));
         leftPanel.add(sitioField);
         sitioField.setColumns(10);
+        if (currentEntry != null) {
+        	sitioField.setText(currentEntry.getSite());
+        }
 
         JLabel lblUsuario = new JLabel("USUARIO");
         lblUsuario.setBounds(0, 70, 80, 25);
@@ -76,6 +90,9 @@ public class EditPassword extends JPanel {
         usuarioField.setForeground(Color.decode("#4D4C4C"));
         leftPanel.add(usuarioField);
         usuarioField.setColumns(10);
+        if (currentEntry != null) {
+        	usuarioField.setText(currentEntry.getUsername());
+        }
 
         JLabel lblContraseña = new JLabel("CONTRASEÑA");
         lblContraseña.setBounds(0, 140, 100, 25);
@@ -87,6 +104,9 @@ public class EditPassword extends JPanel {
         contraseñaField.setBackground(Color.decode("#ECECEC"));
         contraseñaField.setForeground(Color.decode("#4D4C4C"));
         leftPanel.add(contraseñaField);
+        if (currentEntry != null) {
+        	contraseñaField.setText(currentEntry.getPassword());
+        }
 
         verContraseñaButton = new JToggleButton("...");
         verContraseñaButton.setBounds(300, 170, 30, 34);
@@ -187,6 +207,22 @@ public class EditPassword extends JPanel {
         guardarButton.setForeground(Color.WHITE);
         guardarButton.setPreferredSize(new Dimension(200, 200));
         bottomPanel.add(guardarButton);
+        guardarButton.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) { 
+            	PasswordEntry entry = new PasswordEntry();
+            	entry.setSite(sitioField.getText());
+            	entry.setUsername(usuarioField.getText());
+            	entry.setPassword(contraseñaField.getText());
+            	controller.addPasswordEntry(entry);
+            	try {
+					controller.save();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	new CheckPassword(frame, controller); 
+            } 
+        }); 
 
         sugerenciaButton = new JButton("Generar");
         sugerenciaButton.setBackground(Color.decode("#FF4F63"));
@@ -199,7 +235,7 @@ public class EditPassword extends JPanel {
         bottomPanel.add(regresarButton);
         regresarButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
-            	new Welcome(frame); 
+            	new Welcome(frame, controller); 
             } 
         }); 
         

@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+
+import controller.Controller;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +13,11 @@ public class Login extends JPanel {
 	private JFrame frame;
 	private JTextField usuarioField;
 	private JPasswordField contraseñaField;
+    private Controller controller;
 
-	public Login(JFrame frame) {
+	public Login(JFrame frame, Controller controller) {
 		this.frame = frame;
+		this.controller = controller;
 		initialize();
 	}
 
@@ -73,7 +78,7 @@ public class Login extends JPanel {
 				// Ejemplo de validación (usuario=admin, contraseña=admin)
 				if (usuario.equals("admin") && contraseña.equals("admin")) {
 					JOptionPane.showMessageDialog(frame, "Inicio de sesión exitoso");
-					new Welcome(frame); 
+					new Welcome(frame, controller); 
 					// Aquí puedes abrir la siguiente ventana o realizar alguna acción
 				} else {
 					JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos", "Error",
@@ -94,7 +99,7 @@ public class Login extends JPanel {
 				// Abrir la ventana de registro
 				frame.dispose(); // Cerrar la ventana actual de inicio de sesión
 				JFrame registerFrame = new JFrame();
-				Register registerWindow = new Register(registerFrame);
+				Register registerWindow = new Register(registerFrame, controller);
 			}
 		});
 

@@ -60,7 +60,7 @@ public class Password {
 	}
 
 	public boolean procesarPasswordCaracteres(StringBuilder password){
-		 var passwordStr = password.toString();
+		  String passwordStr = password.toString();
 		 
 		 guardarMinusculas(passwordStr);
 		 guardarMayusculas(passwordStr);
@@ -73,7 +73,7 @@ public class Password {
 		 Pattern patterEspeciales = Pattern.compile("[^\\d|\\p{Lower}|\\p{Upper}]+");
 		 Matcher matcherEspeciales = patterEspeciales.matcher(passwordStr);
 		 while (matcherEspeciales.find()) {
-			 var group = matcherEspeciales.group();
+			  String group = matcherEspeciales.group();
 			 caracteresEspeciales.add(group);
 		 }
 		
@@ -83,7 +83,7 @@ public class Password {
 		 Pattern patterNumeros = Pattern.compile("\\d+");
 		 Matcher matcherNumeros = patterNumeros.matcher(passwordStr);
 		 while (matcherNumeros.find()) {
-			 var group = matcherNumeros.group();
+			 String group = matcherNumeros.group();
 			 numeros.add(group);
 		
 		 }
@@ -103,7 +103,7 @@ public class Password {
 		 Pattern patterMayusculas = Pattern.compile("\\p{Upper}+");
 		 Matcher matcherMayusculas = patterMayusculas.matcher(passwordStr);
 		 while (matcherMayusculas.find()) {
-			 var group = matcherMayusculas.group();
+			 String group = matcherMayusculas.group();
 			 letrasMayusculas.add(group);
 	
 		 }
@@ -115,7 +115,7 @@ public class Password {
 		 Pattern patterMinusculas= Pattern.compile("\\p{Lower}+");
 		 Matcher matcherMinusculas = patterMinusculas.matcher(passwordStr);
 		 while (matcherMinusculas.find()) {
-			 var group = matcherMinusculas.group();
+			 String group = matcherMinusculas.group();
 			 letrasMinusculas.add(group);
 		 }
 	}
