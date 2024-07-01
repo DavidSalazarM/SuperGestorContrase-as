@@ -87,11 +87,6 @@ public class Controller {
 			generatePasswordSuggestion(editPasswordScreen);
 		});
 
-		editPasswordScreen.getGuardarButton().addActionListener(e -> {
-			JOptionPane.showMessageDialog(editPasswordScreen.getFrame(), "Funcionalidad de guardar contraseña no implementada.", "Info",
-					JOptionPane.INFORMATION_MESSAGE);
-		});
-
 		// editPasswordScreen.getRegresarButton().addActionListener(e -> {
 		// 	showWelcomeScreen();
 		// });

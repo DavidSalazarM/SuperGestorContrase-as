@@ -1,7 +1,6 @@
 package view;
 
 import javax.swing.*;
-
 import controller.Controller;
 
 import java.awt.*;
@@ -16,14 +15,14 @@ public class Register extends JPanel {
     private JFrame frame;
     private JTextField nombreField;
     private JTextField usuarioField;
-    private JPasswordField contraseñaField;
+    private JPasswordField contrasenaField;
     private JButton btnAyuda; // Declarar el botón "Help"
     private Controller controller;
-
 
     public Register(JFrame frame, Controller controller) {
         this.frame = frame;
         this.controller = controller;
+
         initialize();
     }
 
@@ -31,7 +30,7 @@ public class Register extends JPanel {
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setTitle("Registro de Usuario");
-        frame.setSize(410, 300);
+        frame.setSize(410, 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
@@ -74,12 +73,12 @@ public class Register extends JPanel {
         lblContraseña.setBounds(70, 100, 80, 25);
         panel.add(lblContraseña);
 
-        contraseñaField = new JPasswordField();
-        contraseñaField.setBounds(150, 100, 180, 25);
-        panel.add(contraseñaField);
+        contrasenaField = new JPasswordField();
+        contrasenaField.setBounds(150, 100, 180, 25);
+        panel.add(contrasenaField);
 
         JButton btnRegistrarse = new JButton("Registrarse");
-        btnRegistrarse.setBounds(80, 140, 120, 30);
+        btnRegistrarse.setBounds(145, 140, 120, 30);
         btnRegistrarse.setBackground(Color.decode("#FF4F63"));
         btnRegistrarse.setForeground(Color.WHITE);
         btnRegistrarse.setFocusPainted(false);
@@ -90,7 +89,7 @@ public class Register extends JPanel {
                 // Obtener los valores de los campos de texto
                 String nombre = nombreField.getText();
                 String usuario = usuarioField.getText();
-                String contraseña = String.valueOf(contraseñaField.getPassword());
+                String contraseña = String.valueOf(contrasenaField.getPassword());
 
                 // Validar que los campos no estén vacíos
                 if (nombre.isEmpty() || usuario.isEmpty() || contraseña.isEmpty()) {
@@ -107,7 +106,7 @@ public class Register extends JPanel {
                 // Limpiar los campos después del registro
                 nombreField.setText("");
                 usuarioField.setText("");
-                contraseñaField.setText("");
+                contrasenaField.setText("");
 
                 // Volver a la ventana de inicio de sesión
                 new Login(frame, controller);
@@ -115,7 +114,7 @@ public class Register extends JPanel {
         });
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(210, 140, 120, 30);
+        btnCancelar.setBounds(145, 180, 120, 30);
         btnCancelar.setBackground(Color.decode("#FF4F63"));
         btnCancelar.setForeground(Color.WHITE);
         btnCancelar.setFocusPainted(false);
