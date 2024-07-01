@@ -17,6 +17,7 @@ public class Register extends JPanel {
     private JTextField nombreField;
     private JTextField usuarioField;
     private JPasswordField contraseñaField;
+    private JButton btnAyuda; // Declarar el botón "Help"
     private Controller controller;
 
 
@@ -30,7 +31,7 @@ public class Register extends JPanel {
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setTitle("Registro de Usuario");
-        frame.setSize(410, 350);
+        frame.setSize(410, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
@@ -78,7 +79,7 @@ public class Register extends JPanel {
         panel.add(contraseñaField);
 
         JButton btnRegistrarse = new JButton("Registrarse");
-        btnRegistrarse.setBounds(145, 140, 120, 30);
+        btnRegistrarse.setBounds(80, 140, 120, 30);
         btnRegistrarse.setBackground(Color.decode("#FF4F63"));
         btnRegistrarse.setForeground(Color.WHITE);
         btnRegistrarse.setFocusPainted(false);
@@ -114,7 +115,7 @@ public class Register extends JPanel {
         });
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(145, 180, 120, 30);
+        btnCancelar.setBounds(210, 140, 120, 30);
         btnCancelar.setBackground(Color.decode("#FF4F63"));
         btnCancelar.setForeground(Color.WHITE);
         btnCancelar.setFocusPainted(false);
@@ -126,6 +127,26 @@ public class Register extends JPanel {
                 new Login(frame, controller);
             }
         });
+
+        // Configuración del botón "Help"
+        btnAyuda = new JButton("Help");
+        btnAyuda.setBounds(310, 55, 80, 30);
+        btnAyuda.setBackground(Color.decode("#FF4F63"));
+        btnAyuda.setForeground(Color.WHITE);
+        btnAyuda.setFocusPainted(false);
+        frame.getContentPane().add(btnAyuda);
+
+        btnAyuda.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                AboutManual.showHelpOptions(frame);
+            }
+        });
+
+        // Asegurar que el botón Help sea visible desde el inicio
+        btnAyuda.setVisible(true);
+
+        // Ajustar el orden z para asegurar que el botón Help esté delante
+        frame.getContentPane().setComponentZOrder(btnAyuda, 0);
 
         frame.setVisible(true);
     }
