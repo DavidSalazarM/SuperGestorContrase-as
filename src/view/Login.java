@@ -76,7 +76,7 @@ public class Login extends JPanel {
                 String usuario = usuarioField.getText();
                 String contraseña = String.valueOf(contraseñaField.getPassword());
                 if (usuario.equals("admin") && contraseña.equals("admin")) {
-                    JOptionPane.showMessageDialog(frame, "Inicio de sesión exitoso");
+                    // JOptionPane.showMessageDialog(frame, "Inicio de sesión exitoso");
                     new Welcome(frame, controller); // Aquí puedes abrir la siguiente ventana o realizar alguna acción
                 } else {
                     JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos", "Error",

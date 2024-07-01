@@ -233,7 +233,7 @@ public class UpdatePassword extends JPanel {
 	        regresarButton.setForeground(Color.WHITE);
 	        regresarButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                new CheckPassword(frame);
+	                new CheckPassword(frame, null);
 	            }
 	        });
 	        buttonsPanel.add(regresarButton);

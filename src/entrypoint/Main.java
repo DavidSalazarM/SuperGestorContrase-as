@@ -14,9 +14,8 @@ public class Main {
 				Controller controller = new Controller();
                 try {
 					controller.load();
-                    JFrame frame = new JFrame();
-                    Login loginFrame = new Login(frame, controller);
-                    loginFrame.setVisible(true);
+					MainContainer frame = new MainContainer(controller);
+					frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

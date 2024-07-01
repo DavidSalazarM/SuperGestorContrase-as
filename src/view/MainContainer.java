@@ -8,6 +8,6 @@ public class MainContainer extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public MainContainer(Controller controller) {
-		new Welcome(this, controller);
+		new Login(this, controller);
 	}
 }

@@ -123,9 +123,4 @@ public class Welcome extends JPanel {
 
         frame.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        Welcome welcomePanel = new Welcome(frame);
-    }
 }
