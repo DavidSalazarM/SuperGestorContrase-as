@@ -242,7 +242,7 @@ public class EditPassword extends JPanel {
         buttonsPanel.add(guardarButton); // Agregar el botón al panel de botones
         guardarButton.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent e) {
-           switch (passwordCheak.contraseña(new StringBuilder(contraseñaField.getText()))) {
+           switch (passwordCheak.contrasena(new StringBuilder(contraseñaField.getText()))) {
 	           	 case "Correcto":
 	                 if(currentEntry == null) {
 	                     PasswordEntry entry = new PasswordEntry();
@@ -287,7 +287,7 @@ public class EditPassword extends JPanel {
 	               	break;
 	               	
 	           	 case "Fallo-Se encontro una serie":
-                     JOptionPane.showMessageDialog(frame, "No Puede Haber series en la contraseña");
+                     JOptionPane.showMessageDialog(frame, "No puede haber series en la contraseña.");
 
 	           		break;
 	           		
@@ -297,12 +297,16 @@ public class EditPassword extends JPanel {
 	           		 break;
 	           		 
 	           	 case "Fallo-No cumple numero de caracteres":
-                     JOptionPane.showMessageDialog(frame, "No cumple el numero minimo de caracteres especificos ");
+                     JOptionPane.showMessageDialog(frame, "No cumple el numero minimo de caracteres especificos");
 
 	           		 break;
 	           		 
 	           	 case "FALLO-Faltan Caracteres":
-                     JOptionPane.showMessageDialog(frame, "Necesita todos los tipos de caracteres");
+                     JOptionPane.showMessageDialog(frame, "Necesita todos los tipos de caracteres\n"
+                     		+ "Numericos: 1984\n"
+                     		+ "Mayusculas: GRAN\n"
+                     		+ "Minusculas: hermano\n"
+                     		+ "Especiales: #&)=");
 	           		 break;
 	           	} 
 	        }

@@ -92,7 +92,7 @@ public class Welcome extends JPanel {
                 		+ "1.La contraseña no puede tener series (ej: 123, abc, QWERTY)\n"
                 		+ "2.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteres()).concat(" caracteres\n")
                 		+ "3.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresMayusculas()).concat(" caracteres mayusculas\n")
-                		+ "4.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresMinusculos()).concat(" caracteres minusculos\n")
+                		+ "4.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresMinusculos()).concat(" caracteres minusculas\n")
                 		+ "5.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresNumericos()).concat(" caracteres numericos\n")
                 		+ "6.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresEspeciales()).concat(" caracteres especiales\n"), "Info", JOptionPane.INFORMATION_MESSAGE);
             }

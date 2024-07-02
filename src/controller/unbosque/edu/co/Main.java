@@ -8,7 +8,7 @@ public class Main {
 		 StringBuilder string = new StringBuilder("(8Zw-6Pj(1Ry\"3Ov");
 		
 		 Password password = new Password();
-		 password.contraseña(string);
+		 password.contrasena(string);
 	}
 
 }

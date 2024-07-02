@@ -15,49 +15,6 @@ public class Password {
 	private ArrayList<String> caracteresEspeciales = new ArrayList<>();
 	private ArrayList<String> numeros = new ArrayList<>();
 	private int caracteresContadosTotales=0;
-	
-	public String getMinNumeroCaracteresNumericos() {
-		return Byte.toString(minNumeroCaracteresNumericos);
-	}
-
-	public void setMinNumeroCaracteresNumericos(byte minNumeroCaracteresNumericos) {
-		this.minNumeroCaracteresNumericos = minNumeroCaracteresNumericos;
-	}
-
-	public String getMinNumeroCaracteresMinusculos() {
-		return Byte.toString(minNumeroCaracteresMinusculos);
-		
-	}
-
-	public void setMinNumeroCaracteresMinusculos(byte minNumeroCaracteresMinusculos) {
-		this.minNumeroCaracteresMinusculos = minNumeroCaracteresMinusculos;
-	}
-
-	public String getMinNumeroCaracteresMayusculas() {
-		return Byte.toString(minNumeroCaracteresMayusculas);
-		
-	}
-
-	public void setMinNumeroCaracteresMayusculas(byte minNumeroCaracteresMayusculas) {
-		this.minNumeroCaracteresMayusculas = minNumeroCaracteresMayusculas;
-	}
-
-	public String getMinNumeroCaracteresEspeciales() {
-		return  Byte.toString(minNumeroCaracteresEspeciales);
-	
-	}
-
-	public void setMinNumeroCaracteresEspeciales(byte minNumeroCaracteresEspeciales) {
-		this.minNumeroCaracteresEspeciales = minNumeroCaracteresEspeciales;
-	}
-
-	public String getMinNumeroCaracteres() {
-		return Byte.toString(minNumeroCaracteres);
-	}
-
-	public void setMinNumeroCaracteres(byte minNumeroCaracteres) {
-		this.minNumeroCaracteres = minNumeroCaracteres;
-	}
 
 	private byte minNumeroCaracteresNumericos=1;
 	private byte minNumeroCaracteresMinusculos = 1;
@@ -65,7 +22,7 @@ public class Password {
 	private byte minNumeroCaracteresEspeciales=1;
 	private byte minNumeroCaracteres=8;
 	
-	public String contraseña(StringBuilder password){
+	public String contrasena(StringBuilder password){
 		return caracteresMinimos(password);
 		
 	}
@@ -178,22 +135,22 @@ public class Password {
 		if (cadena.isEmpty()) {
 	        return true;
 	    }
-	    String serieNumerosContraseña = cadena.get(0);
+	    String serieNumerosContrasena = cadena.get(0);
 	    cadena.remove(0);
-	    if (resultadosConocidosNumeros.contains(serieNumerosContraseña)) {
+	    if (resultadosConocidosNumeros.contains(serieNumerosContrasena)) {
 	        return validarPasswordSeries(cadena, resultadosConocidosNumeros,tipoCaracter);
 	    }
-	    else if (serieNumerosContraseña.length() < 3) {
-	        resultadosConocidosNumeros.add(serieNumerosContraseña);
+	    else if (serieNumerosContrasena.length() < 3) {
+	        resultadosConocidosNumeros.add(serieNumerosContrasena);
 	        return validarPasswordSeries(cadena, resultadosConocidosNumeros,tipoCaracter);
 	    }
-	    else if (serieNumerosContraseña.length() > 3 && (validarCadena(serieNumerosContraseña, resultadosConocidosNumeros,tipoCaracter))) {
+	    else if (serieNumerosContrasena.length() > 3 && (validarCadena(serieNumerosContrasena, resultadosConocidosNumeros,tipoCaracter))) {
 	    	 return false;
 	    }
-	    else if (tipoCaracter.toString().contains(serieNumerosContraseña) || tipoCaracter.reverse().toString().contains(serieNumerosContraseña)) {
+	    else if (tipoCaracter.toString().contains(serieNumerosContrasena) || tipoCaracter.reverse().toString().contains(serieNumerosContrasena)) {
 	        return false;
 	    }else {
-	    resultadosConocidosNumeros.add(serieNumerosContraseña);
+	    resultadosConocidosNumeros.add(serieNumerosContrasena);
 	    return validarPasswordSeries(cadena, resultadosConocidosNumeros,tipoCaracter);
 	    }
 	}
@@ -216,11 +173,11 @@ public class Password {
 	}
 	
 	public boolean contadorCaracteres(byte minimoCaracteres,
-			ArrayList<String> caracteresContraseña,
+			ArrayList<String> caracteresContrasena,
 			int caracteresContados,
 			HashMap<String, Integer> resultadosConocidosNumeros){
 		
-		if(caracteresContraseña.isEmpty()){
+		if(caracteresContrasena.isEmpty()){
 			if(caracteresContados>= minimoCaracteres){
 				caracteresContadosTotales+=caracteresContados;
 				return true;
@@ -228,15 +185,60 @@ public class Password {
 				return false;
 			}
 		}
-	    String lineaCaracteres = caracteresContraseña.get(0);
-	    caracteresContraseña.remove(0);
+	    String lineaCaracteres = caracteresContrasena.get(0);
+	    caracteresContrasena.remove(0);
 	    if(resultadosConocidosNumeros.containsKey(lineaCaracteres)){
 	    	caracteresContados+=resultadosConocidosNumeros.get(lineaCaracteres);
-	    	return contadorCaracteres(minimoCaracteres,caracteresContraseña,caracteresContados,resultadosConocidosNumeros);
+	    	return contadorCaracteres(minimoCaracteres,caracteresContrasena,caracteresContados,resultadosConocidosNumeros);
 	    }else {
 	    	caracteresContados+=lineaCaracteres.length();
 	    	resultadosConocidosNumeros.put(lineaCaracteres, lineaCaracteres.length());
-	    	return contadorCaracteres(minimoCaracteres,caracteresContraseña,caracteresContados,resultadosConocidosNumeros);
+	    	return contadorCaracteres(minimoCaracteres,caracteresContrasena,caracteresContados,resultadosConocidosNumeros);
 	    }
 	}
+	
+	
+	public String getMinNumeroCaracteresNumericos() {
+		return Byte.toString(minNumeroCaracteresNumericos);
+	}
+
+	public void setMinNumeroCaracteresNumericos(byte minNumeroCaracteresNumericos) {
+		this.minNumeroCaracteresNumericos = minNumeroCaracteresNumericos;
+	}
+
+	public String getMinNumeroCaracteresMinusculos() {
+		return Byte.toString(minNumeroCaracteresMinusculos);
+		
+	}
+
+	public void setMinNumeroCaracteresMinusculos(byte minNumeroCaracteresMinusculos) {
+		this.minNumeroCaracteresMinusculos = minNumeroCaracteresMinusculos;
+	}
+
+	public String getMinNumeroCaracteresMayusculas() {
+		return Byte.toString(minNumeroCaracteresMayusculas);
+		
+	}
+
+	public void setMinNumeroCaracteresMayusculas(byte minNumeroCaracteresMayusculas) {
+		this.minNumeroCaracteresMayusculas = minNumeroCaracteresMayusculas;
+	}
+
+	public String getMinNumeroCaracteresEspeciales() {
+		return  Byte.toString(minNumeroCaracteresEspeciales);
+	
+	}
+
+	public void setMinNumeroCaracteresEspeciales(byte minNumeroCaracteresEspeciales) {
+		this.minNumeroCaracteresEspeciales = minNumeroCaracteresEspeciales;
+	}
+
+	public String getMinNumeroCaracteres() {
+		return Byte.toString(minNumeroCaracteres);
+	}
+
+	public void setMinNumeroCaracteres(byte minNumeroCaracteres) {
+		this.minNumeroCaracteres = minNumeroCaracteres;
+	}
+
 }
