@@ -16,9 +16,8 @@ public class CheckPassword extends JPanel {
     private Controller controller;
     
     public CheckPassword(final JFrame frame, Controller controller) {
-    	this.controller = controller;
+        this.controller = controller;
         frame.getContentPane().removeAll();
-        //frame.repaint();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1500, 700);
         frame.setLayout(null); // Usar layout nulo para control absoluto
@@ -70,11 +69,11 @@ public class CheckPassword extends JPanel {
         String[] columnNames = {"Sitios", "Usuarios", "Contraseña", "Acciones"};
 
         Object[][] data = new Object[controller.getPasswordEntries().size()][4];
-        for(int i = 0; i < controller.getPasswordEntries().size(); i++) {
-        	data[i][0] = controller.getPasswordEntries().get(i).getSite();
-        	data[i][1] = controller.getPasswordEntries().get(i).getUsername();
-        	data[i][2] = controller.getPasswordEntries().get(i).getPassword();
-        	data[i][3] = "Actualizar";
+        for (int i = 0; i < controller.getPasswordEntries().size(); i++) {
+            data[i][0] = controller.getPasswordEntries().get(i).getSite();
+            data[i][1] = controller.getPasswordEntries().get(i).getUsername();
+            data[i][2] = "****"; // Mostrar asteriscos en lugar de la contraseña real
+            data[i][3] = "Actualizar";
         }
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -159,16 +158,15 @@ class ButtonEditor extends DefaultCellEditor {
             .findAny()
             .orElse(null);
             
-            EditPassword editPasswordScreem = new EditPassword(frame,controller ,entry); // Pasar el JFrame al constructor de UpdatePassword
+            EditPassword editPasswordScreem = new EditPassword(frame, controller, entry); // Pasar el JFrame al constructor de UpdatePassword
             controller.configureEditPasswordListeners(editPasswordScreem);
         });
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-    	// System.out.println(table.getValueAt(row, column));
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        site = (String) model.getValueAt(row, 1);
+        site = (String) model.getValueAt(row, 0); // Cambiado de 1 a 0 para obtener el sitio
         label = (value == null) ? "Actualizar" : value.toString();
         button.setText(label);
         isPushed = true;

@@ -1,10 +1,7 @@
 package entrypoint;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import java.io.IOException;
 import controller.Controller;
-import view.Login;
 import view.MainContainer;
 
 public class Main {

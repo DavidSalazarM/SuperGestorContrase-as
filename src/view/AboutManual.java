@@ -25,7 +25,7 @@ public class AboutManual {
                 break;
             case 1:
                 // Implementar la lógica para abrir el manual PDF
-                String pathToManual = "C:\\Users\\Manuel\\Desktop\\SuperGestorContrase-as-master\\Manual de Usuario.pdf";
+                String pathToManual = ".\\src\\view\\Manual de Usuario.pdf";
                 openPDFManual(pathToManual);
                 break;
             default:

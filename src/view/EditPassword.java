@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.ArrayList;
 
 public class EditPassword extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -240,18 +240,48 @@ public class EditPassword extends JPanel {
         buttonsPanel.add(guardarButton); // Agregar el botón al panel de botones
         guardarButton.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
-            	PasswordEntry entry = new PasswordEntry();
-            	entry.setSite(sitioField.getText());
-            	entry.setUsername(usuarioField.getText());
-            	entry.setPassword(contraseñaField.getText());
-            	controller.addPasswordEntry(entry);
-            	try {
-					controller.save();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            	new CheckPassword(frame, controller); 
+                if(currentEntry == null) {
+                    PasswordEntry entry = new PasswordEntry();
+                    entry.setSite(sitioField.getText());
+                    entry.setUsername(usuarioField.getText());
+                    entry.setPassword(contraseñaField.getText());
+                    entry.setOldPasswords(new ArrayList<String>());
+                    controller.addPasswordEntry(entry);
+                    try {
+                        controller.save();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    new CheckPassword(frame, controller); 
+                } else {
+                    String newPassword = contraseñaField.getText();
+                    
+                    for(String oldPassword: currentEntry.getOldPasswords()){
+                        if (oldPassword.equals(newPassword)) {
+                            JOptionPane.showMessageDialog(frame, "Contrasena usada anteriormente");
+                            return;
+                        }
+                    }
+            
+
+
+                    int currentEntryIndex = controller.getPasswordEntries().indexOf(currentEntry);
+
+                    currentEntry.setSite(sitioField.getText());
+                    currentEntry.setUsername(usuarioField.getText());
+                    currentEntry.getOldPasswords().add(currentEntry.getPassword());
+                    currentEntry.setPassword(contraseñaField.getText());
+                    controller.getPasswordEntries().set(currentEntryIndex, currentEntry);
+                    try {
+                        controller.save();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    new CheckPassword(frame, controller); 
+                }
+
             } 
         }); 
 
