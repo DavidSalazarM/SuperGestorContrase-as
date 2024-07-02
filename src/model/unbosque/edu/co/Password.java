@@ -15,26 +15,80 @@ public class Password {
 	private ArrayList<String> caracteresEspeciales = new ArrayList<>();
 	private ArrayList<String> numeros = new ArrayList<>();
 	private int caracteresContadosTotales=0;
-	private byte minNumeroCaracteresNumericos=2;
-	private byte minNumeroCaracteresMinusculos = 2;
-	private byte minNumeroCaracteresMayusculas = 2;
-	private byte minNumeroCaracteresEspeciales=2;
+	
+	public String getMinNumeroCaracteresNumericos() {
+		return Byte.toString(minNumeroCaracteresNumericos);
+	}
+
+	public void setMinNumeroCaracteresNumericos(byte minNumeroCaracteresNumericos) {
+		this.minNumeroCaracteresNumericos = minNumeroCaracteresNumericos;
+	}
+
+	public String getMinNumeroCaracteresMinusculos() {
+		return Byte.toString(minNumeroCaracteresMinusculos);
+		
+	}
+
+	public void setMinNumeroCaracteresMinusculos(byte minNumeroCaracteresMinusculos) {
+		this.minNumeroCaracteresMinusculos = minNumeroCaracteresMinusculos;
+	}
+
+	public String getMinNumeroCaracteresMayusculas() {
+		return Byte.toString(minNumeroCaracteresMayusculas);
+		
+	}
+
+	public void setMinNumeroCaracteresMayusculas(byte minNumeroCaracteresMayusculas) {
+		this.minNumeroCaracteresMayusculas = minNumeroCaracteresMayusculas;
+	}
+
+	public String getMinNumeroCaracteresEspeciales() {
+		return  Byte.toString(minNumeroCaracteresEspeciales);
+	
+	}
+
+	public void setMinNumeroCaracteresEspeciales(byte minNumeroCaracteresEspeciales) {
+		this.minNumeroCaracteresEspeciales = minNumeroCaracteresEspeciales;
+	}
+
+	public String getMinNumeroCaracteres() {
+		return Byte.toString(minNumeroCaracteres);
+	}
+
+	public void setMinNumeroCaracteres(byte minNumeroCaracteres) {
+		this.minNumeroCaracteres = minNumeroCaracteres;
+	}
+
+	private byte minNumeroCaracteresNumericos=1;
+	private byte minNumeroCaracteresMinusculos = 1;
+	private byte minNumeroCaracteresMayusculas = 1;
+	private byte minNumeroCaracteresEspeciales=1;
 	private byte minNumeroCaracteres=8;
 	
-	public void contraseña(StringBuilder password){
-		if (caracteresMinimos(password)){
-			System.out.println("su contraseña es valida :)");
-		}else {System.out.println("no es tu culpa pero fallaste en algo :'c");}
+	public String contraseña(StringBuilder password){
+		return caracteresMinimos(password);
+		
 	}
 	
-    public boolean PasswordValido() {
-        if ((CaracteresContadosValido()&&caracteresContadosTotales>=minNumeroCaracteres) && seriesValido()) {
-            limpiador();
-            return true;
-        }
+    public String PasswordValido() {
+        if (CaracteresContadosValido()){
+        	if(caracteresContadosTotales>=minNumeroCaracteres){
+        		if(seriesValido()){
+        			 	limpiador();
+        	            return "Correcto";
+        		}else {
+        			 limpiador();
+        			return "Fallo-Se encontro una serie";
+        		}
+        	}else{
+        		 limpiador();
+        		  return "Fallo-No cumple numero de caracteres totales";
+        	}
+           
+        }else {
         limpiador();
-        return false;
-    }
+        return "Fallo-No cumple numero de caracteres";
+    }}
 
     private boolean CaracteresContadosValido() {
         return contadorCaracteres(minNumeroCaracteresNumericos, new ArrayList<>(numeros), 0, new HashMap<>()) &&
@@ -59,7 +113,7 @@ public class Password {
 		this.caracteresContadosTotales=0;
 	}
 
-	public boolean procesarPasswordCaracteres(StringBuilder password){
+	public String procesarPasswordCaracteres(StringBuilder password){
 		  String passwordStr = password.toString();
 		 
 		 guardarMinusculas(passwordStr);
@@ -91,12 +145,12 @@ public class Password {
 	}
 
 	
-	public boolean caracteresMinimos(StringBuilder password){
+	public String caracteresMinimos(StringBuilder password){
 		Pattern compiledPattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).*$");
         Matcher matcher = compiledPattern.matcher(password.toString());
         if( matcher.matches()){
         	return procesarPasswordCaracteres(password);
-        }else{return false;}
+        }else{return "FALLO-Faltan Caracteres";}
 	}
 	
 	private void guardarMayusculas(String passwordStr) {

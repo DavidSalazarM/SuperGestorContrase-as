@@ -15,11 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
+import model.unbosque.edu.co.Password;
 
 
 public class Welcome extends JPanel {
     private static final long serialVersionUID = 1L;
     private Controller controller;
+    private Password passwordCheak = new Password();
 
     public Welcome(final JFrame frame, Controller controller) {
     	this.controller = controller;
@@ -86,6 +88,13 @@ public class Welcome extends JPanel {
                 new EditPassword(frame, controller, null);
                 EditPassword editPasswordScreem = new EditPassword(frame, controller, null);
                 controller.configureEditPasswordListeners(editPasswordScreem);
+                JOptionPane.showMessageDialog(null, "REQUERIMIENTOS DE LA CONTRASEÑA:\n"
+                		+ "1.La contraseña no puede tener series (ej: 123, abc, QWERTY)\n"
+                		+ "2.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteres()).concat(" caracteres\n")
+                		+ "3.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresMayusculas()).concat(" caracteres mayusculas\n")
+                		+ "4.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresMinusculos()).concat(" caracteres minusculos\n")
+                		+ "5.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresNumericos()).concat(" caracteres numericos\n")
+                		+ "6.La contraseña necesita como minimo ".concat(passwordCheak.getMinNumeroCaracteresEspeciales()).concat(" caracteres especiales\n"), "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

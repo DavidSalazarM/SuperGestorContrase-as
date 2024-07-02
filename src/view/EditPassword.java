@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.Controller;
 import model.PasswordEntry;
+import model.unbosque.edu.co.Password;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,7 @@ public class EditPassword extends JPanel {
     private JToggleButton verContraseñaButton;
     private Controller controller;
     private PasswordEntry currentEntry; 
+    private Password passwordCheak = new Password();
 
 
     public EditPassword(JFrame frame, Controller controller, PasswordEntry passwordEntry) {
@@ -239,51 +241,73 @@ public class EditPassword extends JPanel {
         guardarButton.setBounds(570, 500, 100, 40); // Posición manual
         buttonsPanel.add(guardarButton); // Agregar el botón al panel de botones
         guardarButton.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e) { 
-                if(currentEntry == null) {
-                    PasswordEntry entry = new PasswordEntry();
-                    entry.setSite(sitioField.getText());
-                    entry.setUsername(usuarioField.getText());
-                    entry.setPassword(contraseñaField.getText());
-                    entry.setOldPasswords(new ArrayList<String>());
-                    controller.addPasswordEntry(entry);
-                    try {
-                        controller.save();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                    new CheckPassword(frame, controller); 
-                } else {
-                    String newPassword = contraseñaField.getText();
-                    
-                    for(String oldPassword: currentEntry.getOldPasswords()){
-                        if (oldPassword.equals(newPassword)) {
-                            JOptionPane.showMessageDialog(frame, "Contrasena usada anteriormente");
-                            return;
-                        }
-                    }
-            
+        public void actionPerformed(ActionEvent e) {
+           switch (passwordCheak.contraseña(new StringBuilder(contraseñaField.getText()))) {
+	           	 case "Correcto":
+	                 if(currentEntry == null) {
+	                     PasswordEntry entry = new PasswordEntry();
+	                     entry.setSite(sitioField.getText());
+	                     entry.setUsername(usuarioField.getText());
+	                     entry.setPassword(contraseñaField.getText());
+	                     entry.setOldPasswords(new ArrayList<String>());
+	                     controller.addPasswordEntry(entry);
+	                     try {
+	                         controller.save();
+	                     } catch (IOException e1) {
+	                         // TODO Auto-generated catch block
+	                         e1.printStackTrace();
+	                     }
+	                     new CheckPassword(frame, controller); 
+	                 } else {
+	                     String newPassword = contraseñaField.getText();
+	                     
+	                     for(String oldPassword: currentEntry.getOldPasswords()){
+	                         if (oldPassword.equals(newPassword)) {
+	                             JOptionPane.showMessageDialog(frame, "Contrasena usada anteriormente");
+	                             return;
+	                         }
+	                     }
+	
+	                     int currentEntryIndex = controller.getPasswordEntries().indexOf(currentEntry);
+	
+	                     currentEntry.setSite(sitioField.getText());
+	                     currentEntry.setUsername(usuarioField.getText());
+	                     currentEntry.getOldPasswords().add(currentEntry.getPassword());
+	                     currentEntry.setPassword(contraseñaField.getText());
+	                     controller.getPasswordEntries().set(currentEntryIndex, currentEntry);
+	                     try {
+	                         controller.save();
+	                     } catch (IOException e1) {
+	                         // TODO Auto-generated catch block
+	                         e1.printStackTrace();
+	                     }
+	                     new CheckPassword(frame, controller); 
+	                 }
+	           		 
+	               	break;
+	               	
+	           	 case "Fallo-Se encontro una serie":
+                     JOptionPane.showMessageDialog(frame, "No Puede Haber series en la contraseña");
 
+	           		break;
+	           		
+	           	 case "Fallo-No cumple numero de caracteres totales":
+                     JOptionPane.showMessageDialog(frame, "No cumple el numero minimo de caracteres totales");
 
-                    int currentEntryIndex = controller.getPasswordEntries().indexOf(currentEntry);
+	           		 break;
+	           		 
+	           	 case "Fallo-No cumple numero de caracteres":
+                     JOptionPane.showMessageDialog(frame, "No cumple el numero minimo de caracteres especificos ");
 
-                    currentEntry.setSite(sitioField.getText());
-                    currentEntry.setUsername(usuarioField.getText());
-                    currentEntry.getOldPasswords().add(currentEntry.getPassword());
-                    currentEntry.setPassword(contraseñaField.getText());
-                    controller.getPasswordEntries().set(currentEntryIndex, currentEntry);
-                    try {
-                        controller.save();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                    new CheckPassword(frame, controller); 
-                }
+	           		 break;
+	           		 
+	           	 case "FALLO-Faltan Caracteres":
+                     JOptionPane.showMessageDialog(frame, "Necesita todos los tipos de caracteres");
+	           		 break;
+	           	} 
+	        }
 
-            } 
-        }); 
+        });
 
         sugerenciaButton = new JButton("Generar");
         sugerenciaButton.setBackground(Color.decode("#FF4F63"));

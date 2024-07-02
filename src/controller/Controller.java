@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ public class Controller {
 	
 
 	public void addPasswordEntry(PasswordEntry passwordEntry) {
-		this.passwordEntries.add(passwordEntry);
+			this.passwordEntries.add(passwordEntry);
 	}
 	
 	public void updatePasswordEntry(PasswordEntry passwordEntry) {
